@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="财经短视频选题与口播文案工作台">
+  <title>财经短视频选题—口播工作台</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#top">
+      <span class="logo">¥</span>
+      <span>财经内容工作台</span>
+    </a>
+    <div class="header-meta">
+      <span id="saveState"><i></i>已自动保存</span>
+      <button class="text-btn" id="resetBtn" type="button">新建任务</button>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div>
+        <span class="eyebrow">TOPIC → SCRIPT</span>
+        <h1>从热点资料，到可导出的口播稿。</h1>
+        <p>不接TTS、不管剪辑。先把每天最费脑的选题和文案环节跑顺。</p>
+      </div>
+      <div class="flow">
+        <a href="#step1"><b>01</b><span>热点资料</span></a>
+        <i>→</i>
+        <a href="#step2"><b>02</b><span>选题筛选</span></a>
+        <i>→</i>
+        <a href="#step3"><b>03</b><span>口播导出</span></a>
+      </div>
+    </section>
+
+    <section class="step-card" id="step1">
+      <div class="step-head">
+        <div class="step-no">01</div>
+        <div>
+          <span>INPUT</span>
+          <h2>录入热点和参考资料</h2>
+        </div>
+        <strong>约 2 分钟</strong>
+      </div>
+
+      <div class="input-grid">
+        <label class="field field-large">
+          <span>核心关键词 / 热点事件 <em>必填</em></span>
+          <input id="keyword" maxlength="40" placeholder="例如：黄金回调、非农数据、人民币汇率">
+        </label>
+        <label class="field">
+          <span>发布平台</span>
+          <select id="platform">
+            <option>抖音</option>
+            <option>快手</option>
+            <option>头条</option>
+            <option>多平台通用</option>
+          </select>
+        </label>
+        <label class="field">
+          <span>目标长度</span>
+          <select id="targetLength">
+            <option value="650">约 650 字 / 100 秒</option>
+            <option value="850" selected>约 850 字 / 130 秒</option>
+            <option value="1000">约 1000 字 / 155 秒</option>
+          </select>
+        </label>
+        <label class="field">
+          <span>观点强度</span>
+          <select id="tone">
+            <option value="犀利但克制">犀利但克制</option>
+            <option value="强冲突">强冲突</option>
+            <option value="理性分析">理性分析</option>
+          </select>
+        </label>
+      </div>
+
+      <label class="field">
+        <span>参考资料 / 新闻原文 / 数据 <em>建议填写</em></span>
+        <textarea id="sourceText" rows="9" maxlength="6000" placeholder="把财经网站资讯、热搜说明、视频文案、关键数据直接粘贴在这里。建议保留机构名、日期和来源。"></textarea>
+        <small><b id="sourceCount">0</b>/6000 字</small>
+      </label>
+
+      <div class="source-row">
+        <label class="field">
+          <span>来源链接</span>
+          <input id="sourceUrl" placeholder="可选，用于导出时保留来源">
+        </label>
+        <label class="field">
+          <span>补充要求</span>
+          <input id="extraRule" placeholder="例如：重点讲普通人影响，不要推荐具体标的">
+        </label>
+      </div>
+
+      <div class="step-actions">
+        <span class="hint">资料越完整，外部AI生成质量越稳定。</span>
+        <button class="primary-btn" id="toTopicsBtn" type="button">进入选题台 <b>→</b></button>
+      </div>
+    </section>
+
+    <section class="step-card" id="step2">
+      <div class="step-head">
+        <div class="step-no">02</div>
+        <div>
+          <span>TOPIC LAB</span>
+          <h2>生成、评分并选择选题</h2>
+        </div>
+        <strong>人工只做最终选择</strong>
+      </div>
+
+      <div class="mode-grid">
+        <article class="mode-card recommended">
+          <span>推荐</span>
+          <h3>调用你常用的AI</h3>
+          <p>工作台组装完整提示词。复制给任意AI，再把返回结果粘回来，质量最高。</p>
+          <button class="dark-btn" id="copyTopicPromptBtn" type="button">复制选题提示词</button>
+        </article>
+        <article class="mode-card">
+          <span>快速</span>
+          <h3>本地直接生成</h3>
+          <p>不联网、不调用模型。适合快速找方向，正式发布前建议结合真实资料复核。</p>
+          <button class="outline-btn" id="localTopicsBtn" type="button">生成10个本地选题</button>
+        </article>
+      </div>
+
+      <details class="import-box" id="importBox">
+        <summary>粘贴AI返回的选题结果 <span>展开</span></summary>
+        <textarea id="topicResponse" rows="8" placeholder="支持“1. 标题”或工作台提示词要求的竖线格式。"></textarea>
+        <div class="import-actions">
+          <span>建议粘贴完整10条结果</span>
+          <button id="parseTopicsBtn" class="small-btn" type="button">解析并评分</button>
+        </div>
+      </details>
+
+      <div class="topic-empty" id="topicEmpty">
+        <b>10</b>
+        <p>还没有选题</p>
+        <span>复制AI提示词，或使用本地快速生成。</span>
+      </div>
+
+      <div class="topics hidden" id="topicsArea">
+        <div class="topics-bar">
+          <div>
+            <span>综合排序</span>
+            <b>点击卡片选择最终选题</b>
+          </div>
+          <div class="legend"><i></i> TOP3 <i></i> 已选择</div>
+        </div>
+        <div class="topic-list" id="topicList"></div>
+        <div class="selected-strip">
+          <span>当前选择</span>
+          <strong id="selectedTopicText">尚未选择</strong>
+          <button id="toScriptBtn" type="button">用此选题生成口播 →</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="step-card" id="step3">
+      <div class="step-head">
+        <div class="step-no">03</div>
+        <div>
+          <span>SCRIPT DESK</span>
+          <h2>生成、检查并导出口播稿</h2>
+        </div>
+        <strong id="scriptTarget">目标约 850 字</strong>
+      </div>
+
+      <div class="chosen-topic">
+        <span>选题</span>
+        <strong id="chosenTopic">请先在上一步选择选题</strong>
+      </div>
+
+      <div class="script-tools">
+        <button class="dark-btn" id="copyScriptPromptBtn" type="button">复制口播提示词</button>
+        <button class="outline-btn" id="localScriptBtn" type="button">生成本地结构草稿</button>
+        <span>将AI返回的纯口播稿粘贴到下方即可自动检查。</span>
+      </div>
+
+      <label class="field script-field">
+        <span>口播正文 <em>可直接编辑</em></span>
+        <textarea id="scriptText" rows="24" maxlength="8000" placeholder="把AI生成的口播稿粘贴到这里，或点击“生成本地结构草稿”。"></textarea>
+      </label>
+
+      <div class="analysis-grid">
+        <div class="metric"><span>有效字数</span><b id="charMetric">0</b><small id="charStatus">等待文案</small></div>
+        <div class="metric"><span>预计时长</span><b id="durationMetric">0秒</b><small>按380字/分钟</small></div>
+        <div class="metric"><span>数字项</span><b id="numberMetric">0</b><small>建议逐项核验</small></div>
+        <div class="metric"><span>风险词</span><b id="riskMetric">0</b><small id="riskStatus">未发现</small></div>
+      </div>
+
+      <div class="risk-panel safe" id="riskPanel">
+        <div>
+          <span id="riskIcon">✓</span>
+          <p><b id="riskTitle">等待文案检查</b><small id="riskDetail">输入正文后自动扫描绝对化、收益承诺和直接建议措辞。</small></p>
+        </div>
+      </div>
+
+      <div class="export-row">
+        <label class="field version-field">
+          <span>版本号</span>
+          <select id="version">
+            <option>v01</option><option>v02</option><option>v03</option><option>v04</option><option>v05</option>
+          </select>
+        </label>
+        <div class="export-actions">
+          <button class="outline-btn" id="copyScriptBtn" type="button">复制正文</button>
+          <button class="primary-btn" id="exportTxtBtn" type="button">导出 TXT <b>↓</b></button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div class="toast" id="toast">已复制</div>
+  <script src="./app.js"></script>
+</body>
+</html>
